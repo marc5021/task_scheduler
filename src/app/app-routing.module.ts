@@ -5,16 +5,16 @@ import { LoginPageComponent } from './login-page/login-page.component';
 
 const router: Routes = [
 
-	{path: '', component: AppComponent},
-	{path: 'login', component: LoginPageComponent}
+  {path: '', component: AppComponent},
+  {path: 'login', component: LoginPageComponent}
 
-]
+];
 
 const routes: Routes = [];
 
 @NgModule({
   imports: [
-	RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
   providers: []
