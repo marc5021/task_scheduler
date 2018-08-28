@@ -17,14 +17,13 @@ import { LoginPageComponent } from './login-page/login-page.component';
   declarations: [
     AppComponent,
     ItemsComponent,
-    LoginPageComponent,
-    
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'angularfs'),
-    AngularFirestoreModule
+    AngularFirestoreModule,
     AppRoutingModule
   ],
   providers: [ItemService],
