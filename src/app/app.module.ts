@@ -13,6 +13,10 @@ import { ItemsComponent } from './components/items/items.component';
 import { ItemService } from './services/item.service';
 import { LoginPageComponent } from './login-page/login-page.component';
 import {AuthService} from './services/auth.service';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TimerComponent } from './components/timer/timer.component';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -20,14 +24,19 @@ import {AuthService} from './services/auth.service';
   declarations: [
     AppComponent,
     ItemsComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'angularfs'),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [
     ItemService,
