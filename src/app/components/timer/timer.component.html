@@ -1,0 +1,13 @@
+<div class="example-wrapper">
+  <h2>Timer Only</h2>
+
+  <label class="example-input-wrapper">
+    Time:
+    <input placeholder="Time:"
+           [(ngModel)]="dateTime2"
+           [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
+    <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+  </label>
+
+  <h4>Value From Picker: {{dateTime2}}</h4>
+</div>
