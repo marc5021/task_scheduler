@@ -17,6 +17,8 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TimerComponent } from './components/timer/timer.component';
 import {FormsModule} from '@angular/forms';
+import { CounterComponent } from './components/counter/counter.component';
+import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
 
 
 
@@ -25,7 +27,9 @@ import {FormsModule} from '@angular/forms';
     AppComponent,
     ItemsComponent,
     LoginPageComponent,
-    TimerComponent
+    TimerComponent,
+    CounterComponent,
+    ClockfomatterPipe
   ],
   imports: [
     BrowserModule,
