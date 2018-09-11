@@ -1,4 +1,13 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+    <span>Timer</span>
+    <div style="margin: 0 0 0 auto;">
+      <button (click)="AuthenticationService.logout()" class="btn">Logout</button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 <div class="container" *ngIf="fireAuth.user | async">
+
   <router-outlet></router-outlet>
 </div>
 <div *ngIf="!(fireAuth.user | async)">

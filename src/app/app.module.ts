@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { ItemsComponent } from './components/items/items.component';
 
 import { ItemService } from './services/item.service';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import {AuthService} from './services/auth.service';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -19,6 +19,8 @@ import { TimerComponent } from './components/timer/timer.component';
 import {FormsModule} from '@angular/forms';
 import { CounterComponent } from './components/counter/counter.component';
 import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
+import { MainPageComponent } from './pages/main-page/main-page.component';
+import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
 
 
 
@@ -29,7 +31,8 @@ import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
     LoginPageComponent,
     TimerComponent,
     CounterComponent,
-    ClockfomatterPipe
+    ClockfomatterPipe,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,9 @@ import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
     FormsModule
   ],
   providers: [

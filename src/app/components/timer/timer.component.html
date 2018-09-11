@@ -1,14 +1,12 @@
 <script src="../../../../node_modules/angular-ticking-clock/dist/angular-ticking-clock.js"></script>
 <div class="example-wrapper" xmlns="">
-  <h2>Timer Only</h2>
-
   <label class="example-input-wrapper">
-    Time:
-    <input placeholder="Time:"
-           [(ngModel)]="dateTime2"
+    Forgot to start your timer? Set your times here:
+    <input placeholder="Start time:"
+           [(ngModel)]="dateTime1"
            [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
     <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
-  </label>
 
-  <h4>Value From Picker: {{dateTime2}}</h4>
+    You started working at: {{dateTime1}}
+  </label>
 </div>

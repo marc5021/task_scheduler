@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AngularFirestore, DocumentSnapshot} from 'angularfire2/firestore';
 import {Timelog} from '../../models/timelog';
 import {AuthService} from '../../services/auth.service';
+import {ResourceFormatter} from '../../resources/resource-formatter.resource';
 
 @Component({
   selector: 'app-counter',
@@ -13,30 +14,34 @@ export class CounterComponent implements OnInit, OnDestroy {
   diff = 0;
   counterInterval;
   counterIsRunning = false;
-  timeLogDoc: DocumentSnapshot<Timelog>;
+  timeLogRef: any;
+  hasCheckForRunning = false;
 
   constructor(
     private firestore: AngularFirestore,
-    private authService: AuthService
+    private authService: AuthService,
+    private formatter: ResourceFormatter,
   ) {}
 
   ngOnInit() {
     this.authService.getAuth().subscribe((user) => {
-      if (user.user) {
-        const timelogs = this.firestore.collection('timelogs',
+      if (user.user && !this.hasCheckForRunning) {
+        const timelogs = this.formatter.collection('timelogs',
           ref => ref
             .where('user', '==', this.firestore.doc('/users/' + user.user.uid).ref)
             .orderBy('startTime', 'desc')
             .limit(1)
         );
-        timelogs.valueChanges().subscribe((timelog: Timelog[]) => {
-          console.log('ye', timelog);
-          this.diff = +new Date() - timelog[0].startTimestamp;
-          this.counterInterval = setInterval(() => {
-            this.countUp();
-          },  1000);
-          this.counterIsRunning = true;
+        let hasBeenCheck = false;
+        timelogs.subscribe((timelog: Timelog[]) => {
+          if (timelog.length !== 0 && !hasBeenCheck) {
+            console.log('timelog from init', timelog);
+            this.diff = +new Date() - timelog[0].data.startTimestamp;
+            this.startCounter(timelog[0].ref.path).then();
+          }
+          hasBeenCheck = true;
         });
+        this.hasCheckForRunning = true;
       }
     });
   }
@@ -44,37 +49,57 @@ export class CounterComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  public async startCounter() {
-    if (this.counterIsRunning === false) {
-      this.counterInterval = setInterval(() => {
-        this.countUp();
-      },  1000);
-      this.counterIsRunning = true;
+  public toggleCounter() {
+    if (this.counterIsRunning) {
+      this.stopCounter();
+    } else {
+      this.startCounter().then();
+    }
+  }
 
-      if (this.authService.getCurrentAuth().user.uid) {
+  private async startCounter(timelogPath = null) {
+    this.counterInterval = setInterval(() => {
+      this.countUp();
+    },  1000);
+    this.counterIsRunning = true;
+
+    if (this.authService.getCurrentAuth().user.uid) {
+
+      let timeLogDocument;
+      if (timelogPath) {
+        timeLogDocument = await new Promise(((resolve, reject) => {
+          this.formatter.doc(timelogPath).subscribe((response) => {
+            resolve(response);
+          });
+        }));
+        this.timeLogRef = timeLogDocument.ref.path;
+
+      } else {
         const response = await this.firestore.collection('timelogs').add({
-          user: this.firestore.doc('/users/' + this.authService.getCurrentAuth().user.uid).ref, // Sådan gør man xD
+          user: this.firestore.doc('/users/' + this.authService.getCurrentAuth().user.uid).ref,
           startTime: new Date().toLocaleString(),
           startTimestamp: +new Date()
         });
-        const timeLogDocument = await response.get();
-        this.timeLogDoc = <DocumentSnapshot<Timelog>> timeLogDocument;
+        timeLogDocument = await response.get();
+        this.timeLogRef = timeLogDocument.ref;
       }
-      return;
+
     }
+    return;
+  }
 
-    if (this.counterIsRunning === true) {
-      clearInterval(this.counterInterval);
+  private stopCounter() {
+    clearInterval(this.counterInterval);
+    console.log(this.timeLogRef);
+    this.firestore.doc(this.timeLogRef).update({
+      endTime: new Date().toLocaleString(),
+      endTimestamp: +new Date(),
+      diff: this.diff
+    }).then();
+    console.log('stop');
 
-      this.firestore.doc(this.timeLogDoc.ref).update({
-        endTime: new Date(),
-        endTimestamp: +new Date(),
-        diff: this.diff
-      }).then();
-
-      this.counterIsRunning = false;
-      this.diff = 0;
-    }
+    this.counterIsRunning = false;
+    this.diff = 0;
   }
 
   public countUp() {
