@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AngularFirestore, DocumentSnapshot} from 'angularfire2/firestore';
+import {AngularFirestore} from 'angularfire2/firestore';
 import {Timelog} from '../../models/timelog';
 import {AuthService} from '../../services/auth.service';
 import {ResourceFormatter} from '../../resources/resource-formatter.resource';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-counter',
@@ -14,8 +15,10 @@ export class CounterComponent implements OnInit, OnDestroy {
   diff = 0;
   counterInterval;
   counterIsRunning = false;
-  timeLogRef: any;
+  timeLogPath: any;
   hasCheckForRunning = false;
+  userSub: Subscription;
+  timelogSub: Subscription;
 
   constructor(
     private firestore: AngularFirestore,
@@ -24,7 +27,7 @@ export class CounterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.authService.getAuth().subscribe((user) => {
+    this.userSub = this.authService.getAuth().subscribe((user) => {
       if (user.user && !this.hasCheckForRunning) {
         const timelogs = this.formatter.collection('timelogs',
           ref => ref
@@ -33,9 +36,8 @@ export class CounterComponent implements OnInit, OnDestroy {
             .limit(1)
         );
         let hasBeenCheck = false;
-        timelogs.subscribe((timelog: Timelog[]) => {
+        this.timelogSub = timelogs.subscribe((timelog: Timelog[]) => {
           if (timelog.length !== 0 && !hasBeenCheck) {
-            console.log('timelog from init', timelog);
             this.diff = +new Date() - timelog[0].data.startTimestamp;
             this.startCounter(timelog[0].ref.path).then();
           }
@@ -47,6 +49,8 @@ export class CounterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.userSub.unsubscribe();
+    this.timelogSub.unsubscribe();
   }
 
   public toggleCounter() {
@@ -67,12 +71,7 @@ export class CounterComponent implements OnInit, OnDestroy {
 
       let timeLogDocument;
       if (timelogPath) {
-        timeLogDocument = await new Promise(((resolve, reject) => {
-          this.formatter.doc(timelogPath).subscribe((response) => {
-            resolve(response);
-          });
-        }));
-        this.timeLogRef = timeLogDocument.ref.path;
+        this.timeLogPath = timelogPath;
 
       } else {
         const response = await this.firestore.collection('timelogs').add({
@@ -81,7 +80,7 @@ export class CounterComponent implements OnInit, OnDestroy {
           startTimestamp: +new Date()
         });
         timeLogDocument = await response.get();
-        this.timeLogRef = timeLogDocument.ref;
+        this.timeLogPath = timeLogDocument.ref;
       }
 
     }
@@ -90,13 +89,11 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   private stopCounter() {
     clearInterval(this.counterInterval);
-    console.log(this.timeLogRef);
-    this.firestore.doc(this.timeLogRef).update({
+    this.firestore.doc(this.timeLogPath).update({
       endTime: new Date().toLocaleString(),
       endTimestamp: +new Date(),
       diff: this.diff
     }).then();
-    console.log('stop');
 
     this.counterIsRunning = false;
     this.diff = 0;
