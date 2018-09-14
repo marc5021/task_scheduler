@@ -1,2 +1,3 @@
 <button (click)="toggleCounter()" class="btn">{{counterIsRunning ? 'Stop' : 'Start'}}</button>
 <h4>{{diff | clockfomatter }}</h4>
+<input name="messageInput" [(ngModel)]="messageInput" type="text" placeholder="Hvad har du lavet?" (input)="updateMessageValue()">

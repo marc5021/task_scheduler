@@ -6,6 +6,7 @@ export class Timelog {
     endTimestamp: number;
     diff?: number;
     user: string;
+    message: string;
   };
   ref: {
     id: string;

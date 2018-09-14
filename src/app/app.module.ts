@@ -21,6 +21,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import { TimelistComponent } from './components/timelist/timelist.component';
 
 
 
@@ -32,7 +33,8 @@ import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/materia
     TimerComponent,
     CounterComponent,
     ClockfomatterPipe,
-    MainPageComponent
+    MainPageComponent,
+    TimelistComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import {Timelog} from '../../models/timelog';
 import {AuthService} from '../../services/auth.service';
 import {ResourceFormatter} from '../../resources/resource-formatter.resource';
 import {Subscription} from 'rxjs';
+import {MessageInputService} from '../../services/messageInput.service';
 
 @Component({
   selector: 'app-counter',
@@ -19,11 +20,13 @@ export class CounterComponent implements OnInit, OnDestroy {
   hasCheckForRunning = false;
   userSub: Subscription;
   timelogSub: Subscription;
+  messageInput = '';
 
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
     private formatter: ResourceFormatter,
+    private messageInputService: MessageInputService
   ) {}
 
   ngOnInit() {
@@ -37,7 +40,7 @@ export class CounterComponent implements OnInit, OnDestroy {
         );
         let hasBeenCheck = false;
         this.timelogSub = timelogs.subscribe((timelog: Timelog[]) => {
-          if (timelog.length !== 0 && !hasBeenCheck) {
+          if (timelog.length !== 0 && !hasBeenCheck && !timelog[0].data.endTime) {
             this.diff = +new Date() - timelog[0].data.startTimestamp;
             this.startCounter(timelog[0].ref.path).then();
           }
@@ -92,11 +95,17 @@ export class CounterComponent implements OnInit, OnDestroy {
     this.firestore.doc(this.timeLogPath).update({
       endTime: new Date().toLocaleString(),
       endTimestamp: +new Date(),
-      diff: this.diff
+      diff: this.diff,
+      message: this.messageInputService.messageInputValue
     }).then();
 
     this.counterIsRunning = false;
     this.diff = 0;
+    this.messageInput = '';
+  }
+
+  public updateMessageValue() {
+    this.messageInputService.setMessageValue(this.messageInput);
   }
 
   public countUp() {

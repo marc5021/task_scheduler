@@ -1,12 +1,16 @@
 <script src="../../../../node_modules/angular-ticking-clock/dist/angular-ticking-clock.js"></script>
 <div class="example-wrapper" xmlns="">
   <label class="example-input-wrapper">
-    Forgot to start your timer? Set your times here:
-    <input placeholder="Start time:"
-           [(ngModel)]="dateTime1"
-           [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
-    <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+    Fik du ik started din timer? Sæt din start og slut tid her istedet for:
+    <input placeholder="Start tid:"
+           [(ngModel)]="startTime"
+           [owlDateTimeTrigger]="startTimeOwl" [owlDateTime]="startTimeOwl">
+    <owl-date-time [pickerType]="'timer'" #startTimeOwl></owl-date-time>
 
-    You started working at: {{dateTime1}}
+    <input placeholder="Slut tid:"
+           [(ngModel)]="endTime"
+           [owlDateTimeTrigger]="endTimeOwl" [owlDateTime]="endTimeOwl">
+    <owl-date-time [pickerType]="'timer'" #endTimeOwl></owl-date-time>
   </label>
+  <button (click)="addTime()" class="btn">TRYK MIG</button>
 </div>
