@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth.service';
 import {ResourceFormatter} from '../../resources/resource-formatter.resource';
 import {Subscription} from 'rxjs';
 import {MessageInputService} from '../../services/messageInput.service';
+import {Favicons} from '../../services/favicon.service';
 
 @Component({
   selector: 'app-counter',
@@ -26,10 +27,13 @@ export class CounterComponent implements OnInit, OnDestroy {
     private firestore: AngularFirestore,
     private authService: AuthService,
     private formatter: ResourceFormatter,
-    private messageInputService: MessageInputService
+    private messageInputService: MessageInputService,
+    private favicons: Favicons
   ) {}
 
   ngOnInit() {
+    this.resetFavicon();
+
     this.userSub = this.authService.getAuth().subscribe((user) => {
       if (user.user && !this.hasCheckForRunning) {
         const timelogs = this.formatter.collection('timelogs',
@@ -59,8 +63,10 @@ export class CounterComponent implements OnInit, OnDestroy {
   public toggleCounter() {
     if (this.counterIsRunning) {
       this.stopCounter();
+      this.useFavicon('blackClock');
     } else {
       this.startCounter().then();
+      this.useFavicon('redClock');
     }
   }
 
@@ -102,6 +108,20 @@ export class CounterComponent implements OnInit, OnDestroy {
     this.counterIsRunning = false;
     this.diff = 0;
     this.messageInput = '';
+  }
+
+  // I reset the favicon to use the "default" item.
+  public resetFavicon(): void {
+    this.favicons.reset();
+  }
+
+  // I activate the favicon with the given name.
+  public useFavicon( name: string ): void {
+    // Notice that we don't need to know anything about how the favicon is defined;
+    // not URLs, no image types - just the identifier. All of the implementation
+    // details have been defined at bootstrap time.
+    this.favicons.activate( name );
+
   }
 
   public updateMessageValue() {

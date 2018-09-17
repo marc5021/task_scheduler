@@ -23,15 +23,16 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.css",
-               "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/materialize-css/dist/css/materialize.css",
               "node_modules/ng-pick-datetime/assets/style/picker.min.css"
                ],
             "scripts": [
              "node_modules/jquery/dist/jquery.js",
               "node_modules/materialize-css/dist/js/materialize.js"
-           ],
+           ]
           },
           "configurations": {
             "production": {

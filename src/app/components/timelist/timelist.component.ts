@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {ResourceFormatter} from '../../resources/resource-formatter.resource';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {AuthService} from '../../services/auth.service';
-import {Observable} from 'rxjs';
+import {Observable
+} from 'rxjs';
 import {Timelog} from '../../models/timelog';
 import {take} from 'rxjs/operators';
 import {Authentication} from '../../models/authentication';
+
 
 
 @Component({
@@ -17,11 +19,13 @@ export class TimelistComponent implements OnInit {
 
   timelogs: Observable<Timelog[]>;
   user: Authentication;
+  timeLogPath: any;
 
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
     private formatter: ResourceFormatter,
+
   ) { }
 
   async ngOnInit() {
@@ -33,5 +37,8 @@ export class TimelistComponent implements OnInit {
           .orderBy('endTime', 'desc')
       );
     }
+  }
+  public deleteLog(path) {
+    this.firestore.doc(path).delete().then();
   }
 }

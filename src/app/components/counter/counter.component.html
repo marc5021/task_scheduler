@@ -1,3 +1,14 @@
-<button (click)="toggleCounter()" class="btn">{{counterIsRunning ? 'Stop' : 'Start'}}</button>
-<h4>{{diff | clockfomatter }}</h4>
-<input name="messageInput" [(ngModel)]="messageInput" type="text" placeholder="Hvad har du lavet?" (input)="updateMessageValue()">
+
+<div class="row">
+    <div class="col-7">
+        <input name="messageInput" [(ngModel)]="messageInput" type="text" placeholder="Hvad har du lavet?" (input)="updateMessageValue()">
+    </div>
+    <div class="col-3">
+        <h4>{{diff | clockfomatter }}</h4>
+    </div>
+    <div class="col-2">
+        <button (click)="toggleCounter()" class="btn" [disabled]="messageInput == '' && counterIsRunning">{{counterIsRunning ? 'Stop' : 'Start'}}</button>
+    </div>
+</div>
+
+

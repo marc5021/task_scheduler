@@ -1,1 +1,21 @@
-<p *ngFor="let timelog of (timelogs | async)">{{timelog.data.message}}</p>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+<table>
+    <thead>
+        <tr>
+            <th>Hvad lavede du?</th>
+            <th>Hvonår startede du?</th>
+            <th>Hvornår sluttede du?</th>
+            <th>Hvor lang tid brugte du?</th>
+            <th></th>
+        </tr>
+    </thead>
+        <tr *ngFor="let timelog of (timelogs | async)">
+            <td>{{timelog.data.message}}</td>
+            <td>{{timelog.data.startTime}}</td>
+            <td>{{timelog.data.endTime}}</td>
+            <td>{{timelog.data.diff | clockfomatter}}</td>
+            <td><i id="deleteIcon" (click)="deleteLog(timelog.ref.path)" class="material-icons md18">delete</i></td>
+        </tr>
+</table>

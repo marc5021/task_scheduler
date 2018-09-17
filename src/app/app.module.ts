@@ -22,6 +22,7 @@ import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
 import { TimelistComponent } from './components/timelist/timelist.component';
+import {BROWSER_FAVICONS_CONFIG, BrowserFavicons, Favicons} from './services/favicon.service';
 
 
 
@@ -48,11 +49,44 @@ import { TimelistComponent } from './components/timelist/timelist.component';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [
     ItemService,
-    AuthService
+    AuthService,
+    // The Favicons is an abstract class that represents the dependency-injection
+    // token and the API contract. THe BrowserFavicon is the browser-oriented
+    // implementation of the service.
+    {
+      provide: Favicons,
+      useClass: BrowserFavicons
+    },
+    // The BROWSER_FAVICONS_CONFIG sets up the favicon definitions for the browser-
+    // based implementation. This way, the rest of the application only needs to know
+    // the identifiers (ie, "happy", "default") - it doesn't need to know the paths
+    // or the types. This allows the favicons to be modified independently without
+    // coupling too tightly to the rest of the code.
+    {
+      provide: BROWSER_FAVICONS_CONFIG,
+      useValue: {
+        icons: {
+          'blackClock': {
+            type: 'image/png',
+            href: './assets/images/BlackClock32x32.png',
+            isDefault: true
+          },
+          'redClock': {
+            type: 'image/png',
+            href: './assets/images/RedClock32x32.png'
+          }
+        },
+
+        // I determine whether or not a random token is auto-appended to the HREF
+        // values whenever an icon is injected into the document.
+        cacheBusting: true
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })
