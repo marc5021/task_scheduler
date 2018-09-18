@@ -62,15 +62,17 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   public toggleCounter() {
     if (this.counterIsRunning) {
+      if (!this.messageInput) {
+        return;
+      }
       this.stopCounter();
-      this.useFavicon('blackClock');
     } else {
       this.startCounter().then();
-      this.useFavicon('greenClock');
     }
   }
 
   private async startCounter(timelogPath = null) {
+    this.useFavicon('greenClock');
     this.counterInterval = setInterval(() => {
       this.countUp();
     },  1000);
@@ -97,6 +99,7 @@ export class CounterComponent implements OnInit, OnDestroy {
   }
 
   private stopCounter() {
+    this.useFavicon('blackClock');
     clearInterval(this.counterInterval);
     this.firestore.doc(this.timeLogPath).update({
       endTime: new Date().toLocaleString(),

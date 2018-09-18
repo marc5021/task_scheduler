@@ -6,3 +6,25 @@
     color: black;
     opacity: 1; /* Firefox */
 }
+.row {
+    margin: 0;
+}
+.row .col-9 {
+    margin: -7px 0 0 0;
+}
+.row .col-9 input {
+    margin: 0;
+}
+
+.counter-box {
+    position: relative;
+}
+.counter-clock {
+    position: absolute;
+    left: 15px;
+    top: 5px;
+}
+.counter-icon {
+    position: absolute;
+    left: 130px;
+}
