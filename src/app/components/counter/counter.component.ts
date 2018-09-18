@@ -62,9 +62,6 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   public toggleCounter() {
     if (this.counterIsRunning) {
-      if (!this.messageInput) {
-        return;
-      }
       this.stopCounter();
     } else {
       this.startCounter().then();
@@ -99,6 +96,10 @@ export class CounterComponent implements OnInit, OnDestroy {
   }
 
   private stopCounter() {
+    if (!this.messageInput) {
+      // dodo
+      return;
+    }
     this.useFavicon('blackClock');
     clearInterval(this.counterInterval);
     this.firestore.doc(this.timeLogPath).update({
