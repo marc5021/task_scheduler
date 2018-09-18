@@ -1,0 +1,8 @@
+#counter{
+    font-family: 'Changa';
+    font-size: 130%;
+}
+::placeholder {
+    color: black;
+    opacity: 1; /* Firefox */
+}

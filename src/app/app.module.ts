@@ -23,6 +23,7 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
 import { TimelistComponent } from './components/timelist/timelist.component';
 import {BROWSER_FAVICONS_CONFIG, BrowserFavicons, Favicons} from './services/favicon.service';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 
@@ -35,7 +36,8 @@ import {BROWSER_FAVICONS_CONFIG, BrowserFavicons, Favicons} from './services/fav
     CounterComponent,
     ClockfomatterPipe,
     MainPageComponent,
-    TimelistComponent
+    TimelistComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -73,12 +75,12 @@ import {BROWSER_FAVICONS_CONFIG, BrowserFavicons, Favicons} from './services/fav
         icons: {
           'blackClock': {
             type: 'image/png',
-            href: './assets/images/BlackClock32x32.png',
+            href: './assets/images/BlackClock128x128.png',
             isDefault: true
           },
-          'redClock': {
+          'greenClock': {
             type: 'image/png',
-            href: './assets/images/RedClock32x32.png'
+            href: './assets/images/GreenClock128x128.png'
           }
         },
 

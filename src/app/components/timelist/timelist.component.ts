@@ -39,6 +39,9 @@ export class TimelistComponent implements OnInit {
     }
   }
   public deleteLog(path) {
+    const confirmClick = confirm('Are you sure you want to delete this TimeLog?');
+      if (confirmClick === true) {
     this.firestore.doc(path).delete().then();
+      }
   }
 }

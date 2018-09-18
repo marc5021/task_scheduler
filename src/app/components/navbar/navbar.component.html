@@ -1,0 +1,17 @@
+<mat-toolbar color="accent" style="width: 100%">
+  <mat-toolbar-row>
+    <div class="container">
+      <div class="d-flex">
+        <div class="p-2">
+          <p>Timer</p>
+        </div>
+        <div class="p-2">
+          <app-counter></app-counter>
+        </div>
+        <div class="ml-auto p-2">
+          <i id="logout" (click)="AuthenticationService.logout()" class="material-icons md36">exit_to_app</i>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

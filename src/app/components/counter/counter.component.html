@@ -1,14 +1,19 @@
-
+<link href='https://fonts.googleapis.com/css?family=Changa' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <div class="row">
     <div class="col-7">
         <input name="messageInput" [(ngModel)]="messageInput" type="text" placeholder="Hvad har du lavet?" (input)="updateMessageValue()">
     </div>
     <div class="col-3">
-        <h4>{{diff | clockfomatter }}</h4>
+        <h4 id="counter">{{diff | clockfomatter }}</h4>
     </div>
     <div class="col-2">
-        <button (click)="toggleCounter()" class="btn" [disabled]="messageInput == '' && counterIsRunning">{{counterIsRunning ? 'Stop' : 'Start'}}</button>
+        <i class="material-icons" (click)="toggleCounter()" *ngIf="!messageInput && !counterIsRunning == true;else stopCounter">play_circle_outline</i>
     </div>
 </div>
 
+<ng-template #stopCounter>
+    <i class="material-icons" (click)="toggleCounter()" *ngIf="messageInput && counterIsRunning ==true;">pause_circle_outline</i>
+</ng-template>
 

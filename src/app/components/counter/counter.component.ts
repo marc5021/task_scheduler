@@ -22,7 +22,7 @@ export class CounterComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   timelogSub: Subscription;
   messageInput = '';
-
+  missingMessage: any;
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
@@ -66,7 +66,7 @@ export class CounterComponent implements OnInit, OnDestroy {
       this.useFavicon('blackClock');
     } else {
       this.startCounter().then();
-      this.useFavicon('redClock');
+      this.useFavicon('greenClock');
     }
   }
 
