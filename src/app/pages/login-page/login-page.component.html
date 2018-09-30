@@ -1,1 +1,11 @@
-<button (click)="AuthenticationService.doGoogleLogin()">Login</button>
+<body>
+<div class="clock">
+    <h2>{{hours | loginClock}}:{{minutes | loginClock}}:{{seconds | loginClock}}</h2>
+</div>
+
+<div class="backgroundDiv">
+    <div class="buttonDiv">
+        <button class="btn" (click)="AuthenticationService.doGoogleLogin()">Login</button>
+    </div>
+</div>
+</body>

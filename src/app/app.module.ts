@@ -20,10 +20,13 @@ import {FormsModule} from '@angular/forms';
 import { CounterComponent } from './components/counter/counter.component';
 import { ClockfomatterPipe } from './pipes/clockfomatter.pipe';
 import { MainPageComponent } from './pages/main-page/main-page.component';
-import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatProgressBarModule, MatToolbarModule} from '@angular/material';
 import { TimelistComponent } from './components/timelist/timelist.component';
 import {BROWSER_FAVICONS_CONFIG, BrowserFavicons, Favicons} from './services/favicon.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { DiffToHourPipe } from './pipes/diff-to-hour.pipe';
+import { LoginClockPipe } from './pipes/login-clock.pipe';
 
 
 
@@ -37,7 +40,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ClockfomatterPipe,
     MainPageComponent,
     TimelistComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProgressBarComponent,
+    DiffToHourPipe,
+    LoginClockPipe
   ],
   imports: [
     BrowserModule,
@@ -51,6 +57,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressBarModule,
     FormsModule,
 
   ],

@@ -2,6 +2,20 @@
     font-family: 'Changa';
     font-size: 130%;
 }
+#errorMessage{
+    border-bottom-color: red;
+}
+#errorMessage::placeholder{
+    color: red;
+}
+#messageInput{
+    border-bottom-color: #555555;
+}
+
+#messageInput::placeholder {
+    color: black;
+    opacity: 1;
+}
 ::placeholder {
     color: black;
     opacity: 1; /* Firefox */
@@ -27,4 +41,8 @@
 .counter-icon {
     position: absolute;
     left: 130px;
+}
+
+#messageInput{
+
 }

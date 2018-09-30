@@ -97,7 +97,7 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   private stopCounter() {
     if (!this.messageInput) {
-      // dodo
+      document.getElementById('messageInputId').setAttribute('id', 'errorMessage');
       return;
     }
     this.useFavicon('blackClock');
