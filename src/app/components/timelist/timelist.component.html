@@ -10,10 +10,10 @@
             <th></th>
         </tr>
     </thead>
-        <tr *ngFor="let timelog of (timelogs | async)">
-            <td>{{timelog.data.message}}</td>
-            <td>{{timelog.data.startTime}}</td>
-            <td>{{timelog.data.endTime}}</td>
+        <tr *ngFor="let timelog of timeLogsData">
+            <td><input type="text" value="{{timelog.data.message}}"></td>
+            <td><input type="text" value="{{timelog.data.startTime}}"></td>
+            <td><input type="text" value="{{timelog.data.endTime}}"></td>
             <td>{{timelog.data.diff | clockfomatter}}</td>
             <td><i id="deleteIcon" (click)="deleteLog(timelog.ref.path)" class="material-icons md18">delete</i></td>
         </tr>

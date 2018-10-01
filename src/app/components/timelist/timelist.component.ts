@@ -20,6 +20,7 @@ export class TimelistComponent implements OnInit {
   timelogs: Observable<Timelog[]>;
   user: Authentication;
   timeLogPath: any;
+  timeLogsData: Timelog[];
 
   constructor(
     private firestore: AngularFirestore,
@@ -29,13 +30,16 @@ export class TimelistComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // Take(1) get empty user, Take(2) get user.
     this.user = await this.authService.getAuth().pipe(take(2)).toPromise();
     if (this.user.user) {
       this.timelogs = this.formatter.collection('timelogs',
         ref => ref
           .where('user', '==', this.firestore.doc('/users/' + this.user.user.uid).ref)
-          .orderBy('endTime', 'desc')
+          .orderBy('endTimestamp', 'desc')
       );
+
+      this.timeLogsData = await this.timelogs.pipe(take(1)).toPromise();
     }
   }
   public deleteLog(path) {
@@ -44,4 +48,9 @@ export class TimelistComponent implements OnInit {
     this.firestore.doc(path).delete().then();
       }
   }
+
+  // Bind the different values(message, start and endTime ect) with ngModel.
+  // Subscribe to the values to look for changes and run the update function on a change.
+  // The update function should update the current values with the new values
+
 }
