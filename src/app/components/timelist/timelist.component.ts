@@ -49,6 +49,16 @@ export class TimelistComponent implements OnInit {
       }
   }
 
+  public updateLog(timelog: Timelog) {
+    this.firestore.doc(timelog.ref.path).update({
+      startTime: new Date(timelog.data.startTime).toISOString(),
+      startTimestamp: +new Date(timelog.data.startTime),
+      endTime: new Date(timelog.data.endTime).toISOString(),
+      endTimestamp: +new Date(timelog.data.endTime),
+      message: timelog.data.message
+    });
+    console.log('anything', timelog.data.message);
+  }
   // Bind the different values(message, start and endTime ect) with ngModel.
   // Subscribe to the values to look for changes and run the update function on a change.
   // The update function should update the current values with the new values

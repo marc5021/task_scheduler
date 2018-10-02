@@ -84,8 +84,8 @@ export class CounterComponent implements OnInit, OnDestroy {
       } else {
         const response = await this.firestore.collection('timelogs').add({
           user: this.firestore.doc('/users/' + this.authService.getCurrentAuth().user.uid).ref,
-          startTime: new Date().toLocaleString(),
-          startTimestamp: +new Date()
+          startTime: new Date().toISOString(),
+          startTimestamp: new Date()
         });
         timeLogDocument = await response.get();
         this.timeLogPath = timeLogDocument.ref;
@@ -103,7 +103,7 @@ export class CounterComponent implements OnInit, OnDestroy {
     this.useFavicon('blackClock');
     clearInterval(this.counterInterval);
     this.firestore.doc(this.timeLogPath).update({
-      endTime: new Date().toLocaleString(),
+      endTime: new Date().toISOString(),
       endTimestamp: +new Date(),
       diff: this.diff,
       message: this.messageInputService.messageInputValue

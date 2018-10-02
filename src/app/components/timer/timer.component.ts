@@ -31,15 +31,16 @@ export class TimerComponent implements OnInit {
     const diff = +this.endTime - +this.startTime;
     this.firestore.collection('timelogs').add({
       user: this.firestore.doc('/users/' + this.authService.getCurrentAuth().user.uid).ref,
-      startTime: this.startTime.toLocaleString(),
+      startTime: this.startTime.toISOString(),
       startTimestamp: +this.startTime,
-      endTime: this.endTime.toLocaleString(),
+      endTime: this.endTime.toISOString(),
       endTimestamp: +this.endTime,
       diff: diff,
       message: this.messageInputService.messageInputValue
     }).then();
     this.startTime = null;
     this.endTime = null;
+    this.messageInputService.setMessageValue('');
   }
 }
 

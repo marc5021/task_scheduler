@@ -13,7 +13,7 @@ import { ItemsComponent } from './components/items/items.component';
 import { ItemService } from './services/item.service';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import {AuthService} from './services/auth.service';
-import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TimerComponent } from './components/timer/timer.component';
 import {FormsModule} from '@angular/forms';
@@ -28,7 +28,16 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 import { DiffToHourPipe } from './pipes/diff-to-hour.pipe';
 import { LoginClockPipe } from './pipes/login-clock.pipe';
 
-
+// learn more about this from
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+export const OWL_FORMATS = {
+  fullPickerInput: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false},
+  datePickerInput: {year: 'numeric', month: 'numeric', day: 'numeric', hour12: false},
+  timePickerInput: {hour: 'numeric', minute: 'numeric', hour12: false},
+  monthYearLabel: {year: 'numeric', month: 'short'},
+  dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+  monthYearA11yLabel: {year: 'numeric', month: 'long'},
+};
 
 @NgModule({
   declarations: [
@@ -64,6 +73,7 @@ import { LoginClockPipe } from './pipes/login-clock.pipe';
   providers: [
     ItemService,
     AuthService,
+    {provide: OWL_DATE_TIME_FORMATS, useValue: OWL_FORMATS},
     // The Favicons is an abstract class that represents the dependency-injection
     // token and the API contract. THe BrowserFavicon is the browser-oriented
     // implementation of the service.

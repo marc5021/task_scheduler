@@ -3,18 +3,42 @@
 <table>
     <thead>
         <tr>
-            <th>Hvad lavede du?</th>
-            <th>Hvonår startede du?</th>
-            <th>Hvornår sluttede du?</th>
-            <th>Hvor lang tid brugte du?</th>
+            <th>Description</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Work Hours</th>
             <th></th>
         </tr>
     </thead>
-        <tr *ngFor="let timelog of timeLogsData">
-            <td><input type="text" value="{{timelog.data.message}}"></td>
-            <td><input type="text" value="{{timelog.data.startTime}}"></td>
-            <td><input type="text" value="{{timelog.data.endTime}}"></td>
-            <td>{{timelog.data.diff | clockfomatter}}</td>
-            <td><i id="deleteIcon" (click)="deleteLog(timelog.ref.path)" class="material-icons md18">delete</i></td>
+        <tr *ngFor="let timelog of (timelogs | async)">
+            <td>
+                <input title="message" type="text" [(ngModel)]="timelog.data.message" (blur)="updateLog(timelog)">
+            </td>
+            <td>
+                <input
+                        title="startTime"
+                        [owlDateTimeTrigger]="sdt"
+                        [owlDateTime]="sdt"
+                        type="text"
+                        [(ngModel)]="timelog.data.startTime"
+                        (blur)="updateLog(timelog)">
+                <owl-date-time #sdt></owl-date-time>
+            </td>
+            <td>
+                <input
+                        title="endTime"
+                        [owlDateTimeTrigger]="edt"
+                        [owlDateTime]="edt"
+                        type="text"
+                        [(ngModel)]="timelog.data.endTime"
+                        (blur)="updateLog(timelog)">
+                <owl-date-time #edt></owl-date-time>
+            </td>
+            <td>
+                {{timelog.data.diff | clockfomatter}}
+            </td>
+            <td>
+                <i id="deleteIcon" (click)="deleteLog(timelog.ref.path)" class="material-icons md18">delete</i>
+            </td>
         </tr>
 </table>
