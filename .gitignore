@@ -40,3 +40,6 @@ Thumbs.db
 
 # Custom Files
 /src/environments/*
+
+# Functions
+/functions/node_modules

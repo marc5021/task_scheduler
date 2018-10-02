@@ -12,11 +12,12 @@
     </thead>
         <tr *ngFor="let timelog of (timelogs | async)">
             <td>
-                <input title="message" type="text" [(ngModel)]="timelog.data.message" (blur)="updateLog(timelog)">
+                <input title="message" disabled type="text" [(ngModel)]="timelog.data.message" (blur)="updateLog(timelog)">
             </td>
             <td>
                 <input
                         title="startTime"
+                        disabled
                         [owlDateTimeTrigger]="sdt"
                         [owlDateTime]="sdt"
                         type="text"
@@ -27,6 +28,7 @@
             <td>
                 <input
                         title="endTime"
+                        disabled
                         [owlDateTimeTrigger]="edt"
                         [owlDateTime]="edt"
                         type="text"
