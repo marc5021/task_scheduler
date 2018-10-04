@@ -9,3 +9,7 @@
 .material-icons.md24 { font-size: 24px; }
 .material-icons.md36 { font-size: 36px; }
 .material-icons.md48 { font-size: 48px; }
+
+input:disabled{
+    opacity: 1;
+}

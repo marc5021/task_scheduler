@@ -19,7 +19,7 @@ export class TimelistComponent implements OnInit {
 
   timelogs: Observable<Timelog[]>;
   user: Authentication;
-
+  editTimelogId: string;
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
@@ -38,6 +38,14 @@ export class TimelistComponent implements OnInit {
       );
     }
   }
+
+  public disabledTimelog(timelog: Timelog) {
+    if (this.editTimelogId) {
+      return this.editTimelogId !== timelog.ref.id;
+    }
+    return true;
+  }
+
   public deleteLog(path) {
     const confirmClick = confirm('Are you sure you want to delete this TimeLog?');
       if (confirmClick === true) {
@@ -54,8 +62,8 @@ export class TimelistComponent implements OnInit {
       message: timelog.data.message
     });
   }
-  // Bind the different values(message, start and endTime ect) with ngModel.
-  // Subscribe to the values to look for changes and run the update function on a change.
-  // The update function should update the current values with the new values
 
+  public updateLogState(timelogId: string) {
+    this.editTimelogId = timelogId;
+  }
 }

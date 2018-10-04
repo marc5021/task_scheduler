@@ -11,13 +11,13 @@
         </tr>
     </thead>
         <tr *ngFor="let timelog of (timelogs | async)">
-            <td>
-                <input title="message" disabled type="text" [(ngModel)]="timelog.data.message" (blur)="updateLog(timelog)">
+            <td (click)="updateLogState(timelog.ref.id)">
+                <input title="message" [disabled]="disabledTimelog(timelog)" disabled type="text" [(ngModel)]="timelog.data.message" (blur)="updateLog(timelog)">
             </td>
-            <td>
+            <td class="w-25" (click)="updateLogState(timelog.ref.id)">
                 <input
                         title="startTime"
-                        disabled
+                        [disabled]="disabledTimelog(timelog)"
                         [owlDateTimeTrigger]="sdt"
                         [owlDateTime]="sdt"
                         type="text"
@@ -25,10 +25,10 @@
                         (blur)="updateLog(timelog)">
                 <owl-date-time #sdt></owl-date-time>
             </td>
-            <td>
+            <td class="w-25" (click)="updateLogState(timelog.ref.id)">
                 <input
                         title="endTime"
-                        disabled
+                        [disabled]="disabledTimelog(timelog)"
                         [owlDateTimeTrigger]="edt"
                         [owlDateTime]="edt"
                         type="text"
@@ -36,10 +36,12 @@
                         (blur)="updateLog(timelog)">
                 <owl-date-time #edt></owl-date-time>
             </td>
-            <td>
+            <td (click)="updateLogState(timelog.ref.id)">
                 {{timelog.data.diff | clockfomatter}}
             </td>
             <td>
+                <i id="doneIcon" *ngIf="!disabledTimelog(timelog)" (click)="updateLogState('')" class="material-icons md18">done</i>
+                <i id="updateIcon" *ngIf="disabledTimelog(timelog)" (click)="updateLogState(timelog.ref.id)" class="material-icons md18">create</i>
                 <i id="deleteIcon" (click)="deleteLog(timelog.ref.path)" class="material-icons md18">delete</i>
             </td>
         </tr>
