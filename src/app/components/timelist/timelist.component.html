@@ -12,7 +12,12 @@
     </thead>
         <tr *ngFor="let timelog of (timelogs | async)">
             <td (click)="updateLogState(timelog.ref.id)">
-                <input title="message" [disabled]="disabledTimelog(timelog)" disabled type="text" [(ngModel)]="timelog.data.message" (blur)="updateLog(timelog)">
+                <input
+                        title="message"
+                        [disabled]="disabledTimelog(timelog)"
+                        disabled type="text"
+                        [(ngModel)]="timelog.data.message"
+                        (blur)="updateLog(timelog)">
             </td>
             <td class="w-25" (click)="updateLogState(timelog.ref.id)">
                 <input
@@ -23,7 +28,7 @@
                         type="text"
                         [(ngModel)]="timelog.data.startTime"
                         (blur)="updateLog(timelog)">
-                <owl-date-time #sdt></owl-date-time>
+                        <owl-date-time #sdt></owl-date-time>
             </td>
             <td class="w-25" (click)="updateLogState(timelog.ref.id)">
                 <input
@@ -34,7 +39,7 @@
                         type="text"
                         [(ngModel)]="timelog.data.endTime"
                         (blur)="updateLog(timelog)">
-                <owl-date-time #edt></owl-date-time>
+                        <owl-date-time #edt></owl-date-time>
             </td>
             <td (click)="updateLogState(timelog.ref.id)">
                 {{timelog.data.diff | clockfomatter}}

@@ -2,12 +2,14 @@
     font-family: 'Changa';
     font-size: 130%;
 }
+
 #errorMessage{
     border-bottom-color: red;
 }
 #errorMessage::placeholder{
     color: red;
 }
+
 #messageInput{
     border-bottom-color: #555555;
 }

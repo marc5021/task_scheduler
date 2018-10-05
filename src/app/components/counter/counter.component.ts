@@ -23,6 +23,7 @@ export class CounterComponent implements OnInit, OnDestroy {
   timelogSub: Subscription;
   messageInput = '';
   missingMessage: any;
+  messageInputId = document.getElementById('messageInputId');
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
@@ -95,10 +96,11 @@ export class CounterComponent implements OnInit, OnDestroy {
     return;
   }
 
-  private stopCounter() {
+  public stopCounter() {
     if (!this.messageInput) {
-      document.getElementById('messageInputId').setAttribute('id', 'errorMessage');
-      return;
+    this.errorMessage();
+    } else if (this.messageInput) {
+      this.noErrorMessage();
     }
     this.useFavicon('blackClock');
     clearInterval(this.counterInterval);
@@ -130,6 +132,15 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   public updateMessageValue() {
     this.messageInputService.setMessageValue(this.messageInput);
+  }
+
+  public errorMessage() {
+      document.getElementById('messageInputId').setAttribute('id', 'errorMessage');
+      return;
+  }
+  public noErrorMessage() {
+      document.getElementById('errorMessage').setAttribute('id', 'messageInputId');
+      return;
   }
 
   public countUp() {

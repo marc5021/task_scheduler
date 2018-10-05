@@ -73,6 +73,7 @@ export const OWL_FORMATS = {
   providers: [
     ItemService,
     AuthService,
+    CounterComponent,
     {provide: OWL_DATE_TIME_FORMATS, useValue: OWL_FORMATS},
     // The Favicons is an abstract class that represents the dependency-injection
     // token and the API contract. THe BrowserFavicon is the browser-oriented
