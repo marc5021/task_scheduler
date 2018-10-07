@@ -6,6 +6,7 @@ import {Authentication} from '../../models/authentication';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {AuthService} from '../../services/auth.service';
 import {ResourceFormatter} from '../../resources/resource-formatter.resource';
+import {DiffToHourPipe} from '../../pipes/diff-to-hour.pipe';
 
 @Component({
   selector: 'app-progress-bar',
@@ -56,5 +57,9 @@ export class ProgressBarComponent implements OnInit {
     const day = date.getDay();
     const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
     return new Date(date.setDate(diff));
+  }
+
+  public totalHours() {
+    return Math.round(new DiffToHourPipe().transform(this.total));
   }
 }

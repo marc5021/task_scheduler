@@ -3,10 +3,10 @@
     font-size: 130%;
 }
 
-#errorMessage{
+.errorMessage{
     border-bottom-color: red;
 }
-#errorMessage::placeholder{
+.errorMessage::placeholder{
     color: red;
 }
 
@@ -43,8 +43,4 @@
 .counter-icon {
     position: absolute;
     left: 130px;
-}
-
-#messageInput{
-
 }

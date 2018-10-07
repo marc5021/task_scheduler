@@ -11,7 +11,7 @@ import * as functions from 'firebase-functions';
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-exports.updateDiff = functions.firestore.document('timelogs/{timelogId}').onWrite(((change, context) => {
+exports.updateDiff = functions.firestore.document('timelogs/{timelogId}').onUpdate(((change,) => {
   // Get an object with the previous document value (for update or delete)
   const data = change.after.data();
   const diff = data.endTimestamp - data.startTimestamp;

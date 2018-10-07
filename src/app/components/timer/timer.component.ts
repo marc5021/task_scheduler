@@ -28,23 +28,27 @@ export class TimerComponent implements OnInit {
   }
 
   public addTime() {
-  if (!this.messageInputService.messageInputValue) {
-    this.counter.errorMessage();
-  } else {
-    this.counter.noErrorMessage();
-  }
+    if (!this.messageInputService.messageInputValue) {
+      this.counter.errorMessage();
+    } else {
+      this.counter.noErrorMessage();
+    }
 
-  if (!this.startTime) {
-    this.errorMessageST();
-  } else if (this.startTime) {
-    this.noErrorMessageST();
-  }
+    if (!this.startTime) {
+      this.errorMessageST();
+    } else if (this.startTime) {
+      this.noErrorMessageST();
+    }
 
-  if (!this.endTime) {
-      this.errorMessageET();
-  } else if (this.endTime) {
-    this.noErrorMessageET();
-  }
+    if (!this.endTime) {
+        this.errorMessageET();
+    } else if (this.endTime) {
+      this.noErrorMessageET();
+    }
+
+    if (!this.messageInputService.messageInputValue || !this.startTime || !this.endTime) {
+      return;
+    }
 
     const diff = +this.endTime - +this.startTime;
     this.firestore.collection('timelogs').add({
@@ -62,16 +66,16 @@ export class TimerComponent implements OnInit {
   }
 
   public errorMessageST() {
-    document.getElementById('startTime').setAttribute('id', 'errorMessageST');
+    document.getElementById('startTime').classList.add('errorMessageST');
   }
   public errorMessageET() {
-    document.getElementById('endTime').setAttribute('id', 'errorMessageET');
+    document.getElementById('endTime').classList.add('errorMessageET');
   }
   public noErrorMessageST() {
-    document.getElementById('errorMessageST').setAttribute('id', 'startTime');
+    document.getElementById('startTime').classList.remove('errorMessageST');
   }
   public noErrorMessageET() {
-    document.getElementById('errorMessageET').setAttribute('id', 'endTime');
+    document.getElementById('endTime').classList.remove('errorMessageET');
   }
 }
 

@@ -27,6 +27,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { DiffToHourPipe } from './pipes/diff-to-hour.pipe';
 import { LoginClockPipe } from './pipes/login-clock.pipe';
+import { ArrayKeysPipe } from './pipes/array-keys.pipe';
 
 // learn more about this from
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
@@ -52,7 +53,8 @@ export const OWL_FORMATS = {
     NavbarComponent,
     ProgressBarComponent,
     DiffToHourPipe,
-    LoginClockPipe
+    LoginClockPipe,
+    ArrayKeysPipe
   ],
   imports: [
     BrowserModule,

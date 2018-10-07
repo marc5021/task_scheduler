@@ -6,6 +6,8 @@ import {ResourceFormatter} from '../../resources/resource-formatter.resource';
 import {Subscription} from 'rxjs';
 import {MessageInputService} from '../../services/messageInput.service';
 import {Favicons} from '../../services/favicon.service';
+import {Title} from '@angular/platform-browser';
+import {ClockfomatterPipe} from '../../pipes/clockfomatter.pipe';
 
 @Component({
   selector: 'app-counter',
@@ -29,7 +31,8 @@ export class CounterComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private formatter: ResourceFormatter,
     private messageInputService: MessageInputService,
-    private favicons: Favicons
+    private favicons: Favicons,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
@@ -46,6 +49,7 @@ export class CounterComponent implements OnInit, OnDestroy {
         let hasBeenCheck = false;
         this.timelogSub = timelogs.subscribe((timelog: Timelog[]) => {
           if (timelog.length !== 0 && !hasBeenCheck && !timelog[0].data.endTime) {
+            console.log(timelog[0].data.startTimestamp, +new Date(), +new Date() - timelog[0].data.startTimestamp);
             this.diff = +new Date() - timelog[0].data.startTimestamp;
             this.startCounter(timelog[0].ref.path).then();
           }
@@ -86,7 +90,7 @@ export class CounterComponent implements OnInit, OnDestroy {
         const response = await this.firestore.collection('timelogs').add({
           user: this.firestore.doc('/users/' + this.authService.getCurrentAuth().user.uid).ref,
           startTime: new Date().toISOString(),
-          startTimestamp: new Date()
+          startTimestamp: +new Date()
         });
         timeLogDocument = await response.get();
         this.timeLogPath = timeLogDocument.ref;
@@ -98,10 +102,10 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   public stopCounter() {
     if (!this.messageInput) {
-    this.errorMessage();
-    } else if (this.messageInput) {
-      this.noErrorMessage();
+      this.errorMessage();
+      return;
     }
+    this.noErrorMessage();
     this.useFavicon('blackClock');
     clearInterval(this.counterInterval);
     this.firestore.doc(this.timeLogPath).update({
@@ -111,6 +115,7 @@ export class CounterComponent implements OnInit, OnDestroy {
       message: this.messageInputService.messageInputValue
     }).then();
 
+    this.setTitle(null);
     this.counterIsRunning = false;
     this.diff = 0;
     this.messageInput = '';
@@ -135,15 +140,26 @@ export class CounterComponent implements OnInit, OnDestroy {
   }
 
   public errorMessage() {
-      document.getElementById('messageInputId').setAttribute('id', 'errorMessage');
+      document.getElementById('messageInputId').classList.add('errorMessage');
       return;
   }
   public noErrorMessage() {
-      document.getElementById('errorMessage').setAttribute('id', 'messageInputId');
+      document.getElementById('messageInputId').classList.remove('errorMessage');
       return;
   }
 
   public countUp() {
     this.diff += 1000;
+    this.setTitle(this.diff);
+  }
+
+  public setTitle(time) {
+    let titleTekst;
+    if (time === null) {
+      titleTekst = 'Timer';
+    } else {
+      titleTekst = new ClockfomatterPipe().transform(time) + ' Timer';
+    }
+    this.titleService.setTitle(titleTekst);
   }
 }

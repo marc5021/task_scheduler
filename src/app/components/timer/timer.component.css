@@ -1,19 +1,7 @@
-#errorMessageST, #errorMessageET{
+.errorMessageST, .errorMessageET{
     border-bottom-color: red;
 }
-#errorMessageST::placeholder, #errorMessageET::placeholder{
+.errorMessageST::placeholder, .errorMessageET::placeholder{
     color: red;
 }
 
-#startTime, #endTime{
-    border-bottom-color: #555555;
-}
-
-#startTime::placeholder, #endTime::placeholder {
-    color: #555555;
-    opacity: 1;
-}
-::placeholder {
-    color: #555555;
-    opacity: 1; /* Firefox */
-}
