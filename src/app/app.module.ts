@@ -100,7 +100,7 @@ export const OWL_FORMATS = {
           },
           'greenClock': {
             type: 'image/png',
-            href: './assets/images/GreenClock128x128.png'
+            href: './assets/images/RedClock128x128.png'
           }
         },
 

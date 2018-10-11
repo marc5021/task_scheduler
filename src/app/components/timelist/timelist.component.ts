@@ -55,7 +55,7 @@ export class TimelistComponent implements OnInit {
     const yearStart = new Date(date.getFullYear(), 0, 1);
     // Calculate full weeks to nearest Thursday
     // Return array of year and week number
-    return date.getFullYear() + '|' + Math.ceil((((date.valueOf() - yearStart.valueOf()) / 86400000) + 1) / 7);
+    return date.getFullYear() + ' Uge: ' + Math.ceil((((date.valueOf() - yearStart.valueOf()) / 86400000) + 1) / 7);
   }
   public disabledTimelog(timelog: Timelog) {
     if (this.editTimelogId) {
